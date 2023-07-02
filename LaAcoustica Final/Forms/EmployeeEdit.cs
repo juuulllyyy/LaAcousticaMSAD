@@ -16,7 +16,29 @@ namespace LaAcoustica_Final
     public partial class EmployeeEdit : Form
     {
         bool deleteFlag;
-        
+        bool mouseDown;
+        Point lastLocation;
+        Menu menu = (Menu)Application.OpenForms["Menu"];
+        //Moving the Form around
+        private void EmployeeEdit_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void EmployeeEdit_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                menu.Location = new Point(
+                     (menu.Location.X - lastLocation.X) + e.X, (menu.Location.Y - lastLocation.Y) + e.Y);
+                Update();
+            }
+        }
+        private void EmployeeEdit_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
         public EmployeeEdit()
         {
             InitializeComponent();
